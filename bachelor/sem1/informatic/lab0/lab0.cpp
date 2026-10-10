@@ -1,7 +1,8 @@
-#include <iostream>
+#include <iostream> // директива
+using namespace std; // упроещение вывода
 
 int main()
 {
-    std::cout << "hello bro" << std::endl;
-    return 0;
+    cout << "hello bro" << endl; // hello bro
+    return 0; // все верно
 }
