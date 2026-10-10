@@ -9,4 +9,4 @@
 |:--|:---|:---|:----|
 |0|хело ворлд|24.09|выполнено|
 
-![](https://avatars.mds.yandex.net/i?id=49b0454e271574965d4001501fdb78a9_l-5089285-images-thumbs&n=13)
+![](https://i.cdn01.ru/files/users/images/ac/f3/acf3d83323b3301f18a6c73f381f4a4a.jpg)
