@@ -1,1 +1,21 @@
-*.pptx
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.sln
+Debug/
+Release/
+x64/
+x86/
+
+# Build artifacts
+*.obj
+*.exe
+*.lib
+*.pdb
+*.ilk
+*.exp
+
+# IDE
+*.vcxproj
+*.vcxproj.filters
