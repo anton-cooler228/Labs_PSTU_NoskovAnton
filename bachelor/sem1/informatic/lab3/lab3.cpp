@@ -1,0 +1,48 @@
+#include <iostream>
+#include <cmath>
+#include <iomanip>
+#include <clocale>
+
+using namespace std;
+
+int main() {
+    setlocale(LC_ALL, "65001");
+    const double pi = acos(-1.0);
+    const double eps = 1e-4;
+    const int k = 10;
+    const int n_fixed = 40;
+    
+    double a = pi / 5.0;
+    double b = pi;
+    double h = (b - a) / k;
+
+    cout << fixed << setprecision(4);
+    cout << "x\t\ty(x)\t\tS_n(x)\t\tS_eps(x)\n";
+
+    for (int i = 0; i <= k; ++i) {
+        double x = a + i * h;
+        double y_exact = (pi * pi) / 8.0 - (pi / 4.0) * fabs(x);
+
+        // Случай а) для заданного n
+        double s_n = 0.0;
+        for (int m = 1; m <= n_fixed; ++m) {
+            int coeff = 2 * m - 1;
+            s_n += cos(coeff * x) / (coeff * coeff);
+        }
+
+        // Случай б) для заданной точности
+        double s_eps = 0.0;
+        int m = 1;
+        while (true) {
+            int coeff = 2 * m - 1;
+            double term = cos(coeff * x) / (coeff * coeff);
+            s_eps += term;
+            if (fabs(term) < eps) break;
+            ++m;
+        }
+
+        cout << x << "\t" << y_exact << "\t" << s_n << "\t" << s_eps << "\n";
+    }
+
+    return 0;
+}
