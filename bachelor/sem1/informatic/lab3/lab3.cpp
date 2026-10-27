@@ -31,7 +31,7 @@ int main() {
             s_n += cos(coeff * x) / (coeff * coeff);
         }
 
-        // Случай б) для заданной точности — без while(true) и break
+        // Случай б) для заданной точности
         double s_eps = 0.0;
         int m = 1;
         
