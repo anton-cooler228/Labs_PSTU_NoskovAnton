@@ -6,20 +6,31 @@
 using namespace std;
 
 int main() {
-    setlocale(LC_ALL, "65001");
+    setlocale(LC_ALL, "ru_RU.UTF-8");
+
     const double eps = 1e-4;
     double sum = 0.0;
-    double log_fact = 0.0;
-    int n = 1;
+    double lgFact = 0.0; // lg(1!) = 0
 
-    while (true) {
-        log_fact += log10(n);
-        double term = log_fact * exp(-n * sqrt(n));
-        if (fabs(term) < eps) break;
+    cout << "Сумма ряда: a_n = lg(n!) * e^(-n*sqrt(n)), точность eps = " << eps << "\n";
+    cout << fixed << setprecision(6);
+
+    for (int n = 2; n <= 1000; ++n) {
+        lgFact += log10(static_cast<double>(n)); // lg(n!) = lg((n-1)!) + lg(n)
+
+        double term = lgFact * exp(-n * sqrt(static_cast<double>(n)));
+
+        if (fabs(term) < eps) {
+            cout << "n = " << n << ": |a_n| = " << fabs(term)
+                 << " < eps, суммирование остановлено.\n";
+            break;
+        }
+
         sum += term;
-        ++n;
+        cout << "n = " << n << ": a_n = " << term
+             << ", текущая сумма = " << sum << "\n";
     }
 
-    cout << "Сумма ряда с точностью 10^-4: " << fixed << setprecision(4) << sum << endl;
+    cout << "\nРезультат: сумма ряда = " << sum << "\n";
     return 0;
 }

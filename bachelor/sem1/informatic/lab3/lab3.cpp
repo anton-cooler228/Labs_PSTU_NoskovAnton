@@ -6,18 +6,19 @@
 using namespace std;
 
 int main() {
-    setlocale(LC_ALL, "65001");
+    setlocale(LC_ALL, "Russian");
+
     const double pi = acos(-1.0);
     const double eps = 1e-4;
     const int k = 10;
     const int n_fixed = 40;
-    
+
     double a = pi / 5.0;
     double b = pi;
     double h = (b - a) / k;
 
     cout << fixed << setprecision(4);
-    cout << "x\t\ty(x)\t\tS_n(x)\t\tS_eps(x)\n";
+    cout << "x\ty(x)\tS_n(x)\tS_eps(x)\n";
 
     for (int i = 0; i <= k; ++i) {
         double x = a + i * h;
@@ -30,15 +31,19 @@ int main() {
             s_n += cos(coeff * x) / (coeff * coeff);
         }
 
-        // Случай б) для заданной точности
+        // Случай б) для заданной точности — без while(true) и break
         double s_eps = 0.0;
         int m = 1;
-        while (true) {
-            int coeff = 2 * m - 1;
-            double term = cos(coeff * x) / (coeff * coeff);
+        
+        // Сначала вычисляем первый член, чтобы условие цикла имело смысл
+        int coeff = 2 * m - 1;
+        double term = cos(coeff * x) / (coeff * coeff);
+
+        while (fabs(term) >= eps) {
             s_eps += term;
-            if (fabs(term) < eps) break;
             ++m;
+            coeff = 2 * m - 1;
+            term = cos(coeff * x) / (coeff * coeff);
         }
 
         cout << x << "\t" << y_exact << "\t" << s_n << "\t" << s_eps << "\n";
