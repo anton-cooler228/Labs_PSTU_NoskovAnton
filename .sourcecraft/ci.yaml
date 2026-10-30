@@ -15,5 +15,5 @@ workflows:
             script:
               - git remote remove github 2>/dev/null || true
               - git remote add github "https://x-access-token:${GITHUB_PAT}@github.com/anton-cooler228/Labs_PSTU_NoskovAnton.git"
-              - git push github main
+              - git push github HEAD:main
               - git remote remove github
