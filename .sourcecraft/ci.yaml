@@ -1,0 +1,19 @@
+on:
+  push:
+    - workflows: [sync-to-github]
+      filter:
+        branches: ["main"]
+
+workflows:
+  sync-to-github:
+    tasks:
+      - name: sync-task
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
+        cubes:
+          - name: push-to-github
+            script:
+              - git remote remove github 2>/dev/null || true
+              - git remote add github "https://x-access-token:${GITHUB_PAT}@github.com/anton-cooler228/Labs_PSTU_NoskovAnton.git"
+              - git push github main
+              - git remote remove github
