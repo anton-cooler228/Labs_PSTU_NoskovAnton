@@ -5,7 +5,8 @@
 
 using namespace std;
 
-int main() {
+int main() 
+{
     setlocale(LC_ALL, "ru_RU.UTF-8");
 
     const double eps = 1e-4;
@@ -21,7 +22,8 @@ int main() {
     double term = lgFact * exp(-n * sqrt(static_cast<double>(n)));
 
     // Цикл работает, пока не превышен лимит итераций И текущий член ещё значим
-    while (n <= 1000 && fabs(term) >= eps) {
+    while (n <= 1000 && fabs(term) >= eps) 
+    {
         sum += term;
         cout << "n = " << n << ": a_n = " << term
              << ", текущая сумма = " << sum << "\n";
@@ -32,10 +34,13 @@ int main() {
     }
 
     // Если цикл остановился из-за малого term (а не из-за n > 1000), выводим сообщение
-    if (n <= 1000) {
+    if (n <= 1000) 
+    {
         cout << "n = " << n << ": |a_n| = " << fabs(term)
              << " < eps, суммирование остановлено.\n";
-    } else {
+    } 
+    else 
+    {
         cout << "Достигнут лимит итераций (n > 1000).\n";
     }
 

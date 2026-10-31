@@ -5,7 +5,8 @@
 
 using namespace std;
 
-int main() {
+int main() 
+{
     setlocale(LC_ALL, "Russian");
 
     const double pi = acos(-1.0);
@@ -20,13 +21,15 @@ int main() {
     cout << fixed << setprecision(4);
     cout << "x\ty(x)\tS_n(x)\tS_eps(x)\n";
 
-    for (int i = 0; i <= k; ++i) {
+    for (int i = 0; i <= k; ++i) 
+    {
         double x = a + i * h;
         double y_exact = (pi * pi) / 8.0 - (pi / 4.0) * fabs(x);
 
         // Случай а) для заданного n
         double s_n = 0.0;
-        for (int m = 1; m <= n_fixed; ++m) {
+        for (int m = 1; m <= n_fixed; ++m) 
+        {
             int coeff = 2 * m - 1;
             s_n += cos(coeff * x) / (coeff * coeff);
         }
@@ -39,7 +42,8 @@ int main() {
         int coeff = 2 * m - 1;
         double term = cos(coeff * x) / (coeff * coeff);
 
-        while (fabs(term) >= eps) {
+        while (fabs(term) >= eps) 
+        {
             s_eps += term;
             ++m;
             coeff = 2 * m - 1;

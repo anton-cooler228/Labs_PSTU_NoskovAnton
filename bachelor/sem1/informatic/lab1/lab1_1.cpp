@@ -5,7 +5,8 @@
 
 using namespace std;
 
-int main() { 
+int main() 
+{ 
     setlocale(LC_ALL, ".65001");   // подключаем кириллицу
 
     float a_f = 1000.0f, b_f = 0.0001f;
