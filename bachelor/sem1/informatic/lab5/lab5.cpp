@@ -1,5 +1,5 @@
-#include <windows.h>
 #include <iostream>
+#include <clocale>
 using namespace std;
 
 const int MAX = 20;
@@ -70,8 +70,7 @@ bool canDiag(int a[][MAX], int n, int diag[])
 
 int main()
 {
-    SetConsoleCP(1251);
-    SetConsoleOutputCP(1251);
+    setlocale(LC_ALL, ".65001");
 
     int a[MAX][MAX];
     int diag[MAX];
