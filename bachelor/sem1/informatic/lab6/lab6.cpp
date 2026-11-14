@@ -1,9 +1,9 @@
-#include <clocale>
 #include <iostream>
+#include <cstring>
 using namespace std;
 
-const int MAXLEN = 256;
-const int MAXW = 128;
+const int MAXLEN = 256;  // максимальная длина слова
+const int MAXW = 128;   // максимальное количество уникальных слов
 
 // Ввод строки с клавиатуры
 void Gets(char s[])
@@ -11,109 +11,114 @@ void Gets(char s[])
     cin.getline(s, MAXLEN);
 }
 
-// Сравнение двух слов
+// Сравнение двух слов — исправленная версия
 bool sameWord(char a[], char b[])
 {
     int i = 0;
-    bool same = true;
-    while (a[i] != '\0' && b[i] != '\0' && same)
+    // Сравниваем символы, пока оба слова не закончились
+    while (a[i] != '\0' && b[i] != '\0')
     {
         if (a[i] != b[i])
         {
-            same = false;
+            return false;  // символы не совпадают
         }
-        else
-        {
-            i++;
-        }
+        i++;
     }
-    return same && a[i] == b[i];
+    // Проверяем, что оба слова закончились одновременно (одинаковая длина)
+    return a[i] == '\0' && b[i] == '\0';
 }
 
 // Поиск слова в таблице; возвращает индекс или -1
 int findWord(char words[][MAXLEN], int num, char w[])
 {
-    int idx = -1;
-    for (int i = 0; i < num && idx < 0; i++)
+    for (int i = 0; i < num; i++)
     {
         if (sameWord(words[i], w))
         {
-            idx = i;
+            return i;  // слово найдено, возвращаем его индекс
         }
     }
-    return idx;
+    return -1;  // слово не найдено
 }
 
 int main()
 {
-    setlocale(LC_ALL, ".65001");
+    setlocale(LC_ALL, ".65001");  // установка локали для корректного вывода кириллицы
 
-    char s[MAXLEN];
-    char words[MAXW][MAXLEN];
-    char w[MAXLEN];
-    int cnt[MAXW];
-    int num = 0;
-    int i = 0;
-    int len = 0;
-    int best = 0;
-    bool done = false;
+    char s[MAXLEN];  // входная строка
+    char w[MAXLEN] = {0};  // текущее слово
+    char words[MAXW][MAXLEN] = {0};  // таблица уникальных слов
+    int cnt[MAXW] = {0};  // счётчики частоты слов
+    int num = 0;  // количество уникальных слов в таблице
+    int best = 0;  // индекс самого частого слова
 
     cout << "Ввод строки: ";
     Gets(s);
 
-    while (!done)
-    {
-        while (s[i] == ' ')
-        {
-            i++;
-        }
-        if (s[i] == '.' || s[i] == '\0')
-        {
-            done = true;
-        }
-        else
-        {
-            len = 0;
-            while (s[i] != ' ' && s[i] != '.' && s[i] != '\0')
-            {
-                w[len] = s[i];
-                len++;
-                i++;
-            }
-            w[len] = '\0';
+    int len = 0;      // длина текущего слова
+    int i = 0;      // индекс текущего символа в строке
+    bool done = false;  // флаг завершения обработки
 
-            int idx = findWord(words, num, w);
-            if (idx < 0)
+    while (i < MAXLEN && !done)
+    {
+        char c = s[i];
+
+        // Если встретили пробел или конец строки — обрабатываем слово
+        if (c == ' ' || c == '\0')
+        {
+            if (len > 0)  // если слово не пустое
             {
-                for (int k = 0; k <= len; k++)
+                w[len] = '\0';  // завершаем строку нуль‑терминатором
+                // Ищем слово в таблице
+                int idx = findWord(words, num, w);
+
+                if (idx < 0)
                 {
-                    words[num][k] = w[k];
+                    // Слово не найдено — добавляем его в таблицу
+                    strcpy(words[num], w);  // копируем слово в таблицу
+            cnt[num] = 1;          // инициализируем счётчик
+            num++;                 // увеличиваем счётчик уникальных слов
                 }
-                cnt[num] = 1;
-                num++;
+                else
+                {
+                    // Слово уже есть — увеличиваем его счётчик
+            cnt[idx]++;
+                }
+
+                len = 0;  // сбрасываем длину для следующего слова
             }
-            else
+
+            if (c == '\0')
             {
-                cnt[idx]++;
+                done = true;  // достигли конца строки
             }
+        }
+        else if (len < MAXLEN - 1)
+        {
+            // Добавляем символ в текущее слово (если есть место)
+            w[len++] = c;
+        }
+        i++;
+    }
+
+    // Находим самое частое слово
+    for (int j = 1; j < num; j++)
+    {
+        if (cnt[j] > cnt[best])
+        {
+            best = j;
         }
     }
 
-    if (num == 0)
+    // Вывод результата с проверкой на пустое слово
+    if (num > 0 && strlen(words[best]) > 0)
     {
-        cout << "Слов в строке нет\n";
+        cout << "Чаще всего встречается слово: " << words[best];
+        cout << " (" << cnt[best] << " раз)\n";
     }
     else
     {
-        for (int j = 1; j < num; j++)
-        {
-            if (cnt[j] > cnt[best])
-            {
-                best = j;
-            }
-        }
-        cout << "Чаще всего встречается слово: " << words[best];
-        cout << " (" << cnt[best] << " раз)\n";
+        cout << "Не удалось найти наиболее частое слово.\n";
     }
 
     return 0;
