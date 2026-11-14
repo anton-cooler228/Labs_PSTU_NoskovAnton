@@ -1,4 +1,4 @@
-#include <windows.h>
+#include <clocale>
 #include <iostream>
 using namespace std;
 
@@ -46,8 +46,7 @@ int findWord(char words[][MAXLEN], int num, char w[])
 
 int main()
 {
-    SetConsoleCP(1251);
-    SetConsoleOutputCP(1251);
+    setlocale(LC_ALL, ".65001");
 
     char s[MAXLEN];
     char words[MAXW][MAXLEN];

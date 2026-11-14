@@ -1,4 +1,4 @@
-#include <windows.h>
+#include <clocale>
 #include <iostream>
 using namespace std;
 
@@ -17,8 +17,7 @@ void time(int total, int &h, int &m)
 
 int main()
 {
-    SetConsoleCP(1251);
-    SetConsoleOutputCP(1251);
+    setlocale(LC_ALL, ".65001");
 
     int h;
     int m;

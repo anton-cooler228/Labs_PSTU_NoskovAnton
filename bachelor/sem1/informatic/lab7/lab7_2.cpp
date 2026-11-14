@@ -1,4 +1,4 @@
-#include <windows.h>
+#include <clocale>
 #include <iostream>
 #include <cstdarg>
 using namespace std;
@@ -57,8 +57,7 @@ int days(int n, ...)
 
 int main()
 {
-    SetConsoleCP(1251);
-    SetConsoleOutputCP(1251);
+    setlocale(LC_ALL, ".65001");
 
     cout << "3 параметра (2 даты): " << days(2, "01.03.26", "10.03.26") << " дн.\n";
     cout << "5 параметров (4 даты): " << days(4, "01.01.26", "01.02.26", "01.03.26", "15.03.26") << " дн.\n";

@@ -1,4 +1,4 @@
-#include <windows.h>
+#include <clocale>
 #include <iostream>
 #include <fstream>
 #include <cstring>
@@ -193,8 +193,7 @@ void removeAt(Owner a[], int &num, int idx)
 
 int main()
 {
-    SetConsoleCP(1251);
-    SetConsoleOutputCP(1251);
+    setlocale(LC_ALL, ".65001");
 
     Owner a[MAX];
     Owner nw[2];
