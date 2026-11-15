@@ -6,14 +6,18 @@ using namespace std;
 const int MAXLEN = 256;
 const int MAXW = 128;
 
-void Gets(char s[]) {
+void Gets(char s[]) 
+{
     cin.getline(s, MAXLEN);
 }
 
-bool sameWord(char a[], char b[]) {
+bool sameWord(char a[], char b[]) 
+{
     int i = 0;
-    while (a[i] != '\0' && b[i] != '\0') {
-        if (a[i] != b[i]) {
+    while (a[i] != '\0' && b[i] != '\0') 
+    {
+        if (a[i] != b[i]) 
+        {
             return false;
         }
         i++;
@@ -21,9 +25,12 @@ bool sameWord(char a[], char b[]) {
     return a[i] == '\0' && b[i] == '\0';
 }
 
-int findWord(char words[][MAXLEN], int num, char w[]) {
-    for (int i = 0; i < num; i++) {
-        if (sameWord(words[i], w)) {
+int findWord(char words[][MAXLEN], int num, char w[]) 
+{
+    for (int i = 0; i < num; i++) 
+    {
+        if (sameWord(words[i], w))
+        {
             return i;
         }
     }
@@ -31,13 +38,16 @@ int findWord(char words[][MAXLEN], int num, char w[]) {
 }
 
 // Функция для очистки буфера слова
-void clearWord(char w[]) {
-    for (int i = 0; i < MAXLEN; i++) {
+void clearWord(char w[]) 
+{
+    for (int i = 0; i < MAXLEN; i++) 
+    {
         w[i] = '\0';
     }
 }
 
-int main() {
+int main() 
+{
     // Настройка консоли для кириллицы (Windows)
     SetConsoleCP(1251);          // кодировка ввода — Windows-1251
     SetConsoleOutputCP(1251);   // кодировка вывода — Windows-1251
@@ -59,57 +69,74 @@ int main() {
     int len = 0;
     int i = 0;
 
-    while (s[i] != '\0') {
+    while (s[i] != '\0') 
+    {
         char c = s[i];
 
         // Проверяем разделители (пробелы и знаки препинания)
         if (c == ' ' || c == '\t' || c == '.' || c == ',' ||
-            c == '!' || c == '?' || c == ';' || c == ':') {
-            if (len > 0) {
+            c == '!' || c == '?' || c == ';' || c == ':') 
+            {
+            if (len > 0) 
+            {
                 w[len] = '\0';
                 int idx = findWord(words, num, w);
 
-                if (idx < 0) {
+                if (idx < 0) 
+                {
                     strcpy(words[num], w);
                     cnt[num] = 1;
             num++;
-                } else {
+                } 
+                else 
+                {
                     cnt[idx]++;
                 }
                 len = 0;
                 clearWord(w);  // очищаем буфер
             }
-        } else if (len < MAXLEN - 1) {
+        } 
+        else if (len < MAXLEN - 1) 
+        {
             w[len++] = c;
         }
         i++;
     }
 
     // Обрабатываем последнее слово
-    if (len > 0) {
+    if (len > 0) 
+    {
         w[len] = '\0';
         int idx = findWord(words, num, w);
-        if (idx < 0) {
+        if (idx < 0) 
+        {
             strcpy(words[num], w);
             cnt[num] = 1;
             num++;
-        } else {
+        } 
+        else 
+        {
             cnt[idx]++;
         }
     }
 
     // Находим самое частое слово
-    if (num > 0) {
+    if (num > 0) 
+    {
         best = 0;
-        for (int j = 1; j < num; j++) {
-            if (cnt[j] > cnt[best]) {
+        for (int j = 1; j < num; j++) 
+        {
+            if (cnt[j] > cnt[best]) 
+            {
                 best = j;
             }
         }
 
         cout << "Чаще всего встречается слово: " << words[best];
         cout << " (" << cnt[best] << " раз)\n";
-    } else {
+    } 
+    else 
+    {
         cout << "Не удалось найти наиболее частое слово.\n";
     }
 
