@@ -1,7 +1,6 @@
 // задача про 2-мерную матрицу и нули
 #include <iostream>
 #include <clocale>
-#include <vector>
 
 using namespace std;
 
@@ -10,7 +9,7 @@ int main()
     setlocale(LC_ALL, ".65001");
 
     int n;
-    cout << "Ввод размер матрицы n: ";
+    cout << "Ввод размера матрицы n: ";
     cin >> n;
 
     if (n <= 0)
@@ -19,8 +18,16 @@ int main()
         return 0;
     }
 
-    // Создаём матрицу n×n, заполненную нулями
-    vector<vector<int>> mat(n, vector<int>(n, 0));
+    // Создаём матрицу n×n через указатели, заполненную нулями
+    int** mat = new int*[n]; // массив указателей на строки
+    for (int i = 0; i < n; ++i)
+    {
+        mat[i] = new int[n]; // выделяем память для каждой строки
+        for (int j = 0; j < n; ++j)
+        {
+            mat[i][j] = 0; // заполняем нулями
+        }
+    }
 
     // Вводим число, которое будет стоять на позициях «x»
     int x;
@@ -74,6 +81,13 @@ int main()
         }
         cout << endl;
     }
+
+    // Освобождаем выделенную память
+    for (int i = 0; i < n; ++i)
+    {
+        delete[] mat[i]; // освобождаем память для каждой строки
+    }
+    delete[] mat; // освобождаем память для массива указателей
 
     return 0;
 }
