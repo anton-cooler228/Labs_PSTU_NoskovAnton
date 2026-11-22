@@ -7,6 +7,8 @@ using namespace std;
 const int N = 8;
 int cnt = 0; // счётчик решений
 
+void print(int q[]);
+
 // Проверка безопасности позиции (r, c)
 bool safe(int q[], int r, int c) 
 {

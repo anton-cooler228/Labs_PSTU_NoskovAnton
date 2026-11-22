@@ -1,16 +1,33 @@
 #include <iostream>
 #include <clocale>
 #include <cstring>
+#include <windows.h>
 
 using namespace std;
 
+size_t utf8Length(const char* s)
+{
+    size_t count = 0;
+    for (const unsigned char* p = (const unsigned char*)s; *p; ++p)
+    {
+        if ((*p & 0xC0) != 0x80)
+        {
+            ++count;
+        }
+    }
+    return count;
+}
+
 int main()
 {
+    SetConsoleCP(65001);
+    SetConsoleOutputCP(65001);
     setlocale(LC_ALL, ".65001");
 
     int n;
     cout << "Сколько строк ввести? ";
     cin >> n;
+    cin.ignore();
 
     if (n <= 0)
     {
@@ -25,18 +42,17 @@ int main()
     for (int i = 0; i < n; ++i)
     {
         arr[i] = new char[MAX_LEN];
-        cin.ignore(); // убрать остаток буфера после числа
         cout << "Строка " << i + 1 << ": ";
         cin.getline(arr[i], MAX_LEN);
     }
 
     // Ищем индекс самой короткой строки
     int minIdx = 0;
-    size_t minLen = strlen(arr[0]);
+    size_t minLen = utf8Length(arr[0]);
 
     for (int i = 1; i < n; ++i)
     {
-        size_t curLen = strlen(arr[i]);
+        size_t curLen = utf8Length(arr[i]);
         if (curLen < minLen)
         {
             minLen = curLen;

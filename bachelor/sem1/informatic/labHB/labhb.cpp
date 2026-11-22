@@ -1,5 +1,7 @@
 #include <iostream>
 #include <iomanip>
+#include <clocale>
+#include <windows.h>
 using namespace std;
 
 const int N = 5;          // количество колец
@@ -72,6 +74,12 @@ void hanoi(int n, int from, int to, int via)
 
 int main() 
 {
+    SetConsoleCP(65001);         // кодировка ввода — UTF-8
+    SetConsoleOutputCP(65001);   // кодировка вывода — UTF-8
+
+    // Установка локали
+    setlocale(LC_ALL, ".65001");
+
     // Инициализация: все кольца на стержне 0 (A), от большего к меньшему
     for (int i = 0; i < N; ++i) 
     {
