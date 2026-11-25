@@ -1,0 +1,40 @@
+// доход с рекламы
+#include <iostream>
+#include <clocale>
+using namespace std;
+
+// Структура для хранения данных об рекламе
+struct Advertising 
+{
+    int impressions;              // сколько объявлений показано
+    double clickPercent;          // сколько процентов посетителей нажали на объявление
+    double avgEarningsPerClick;   // сколько в среднем заработано за одно нажатие
+};
+
+int main() 
+{
+    setlocale(LC_ALL, ".65001");
+
+    Advertising ad;
+
+    cout << "Введите количество показов объявлений: ";
+    cin >> ad.impressions;
+
+    cout << "Введите процент кликов (например, 2.5 для 2.5%): ";
+    cin >> ad.clickPercent;
+
+    cout << "Введите средний доход за одно нажатие (в рублях): ";
+    cin >> ad.avgEarningsPerClick;
+
+    if (ad.impressions < 0 || ad.clickPercent < 0 || ad.avgEarningsPerClick < 0) 
+    {
+        cout << "Ошибка: все значения должны быть неотрицательными." << endl;
+        return 1;
+    }
+
+    double income = ad.impressions * (ad.clickPercent / 100.0) * ad.avgEarningsPerClick;
+
+    cout << "\nРассчитанный доход от рекламы: " << income << " руб." << endl;
+
+    return 0;
+}
